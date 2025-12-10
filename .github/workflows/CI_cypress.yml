@@ -1,0 +1,35 @@
+name: cypress_CI #Nome da pipeline
+
+on:
+    push:
+        branches: [ "main" ]
+    pull_request:
+        branches: [ "main" ]
+
+jobs: 
+    cypress_tests:
+        runs-on: ubuntu-latest
+
+        steps:
+        - uses: actions/checkout@v4
+
+        - name: install_dependencias
+          working-directory: ./cypress
+          run: npm install
+
+        - name: executar_testes_Cypress
+          working-directory: ./cypress
+          run: npx cypress run
+            
+        - uses: actions/upload-artifact@v4
+      # add the line below to store screenshots only on failures
+          if: failure()
+          with:
+            name: cypress-screenshots
+            path: ./Cypress_Portfolio/cypress/screenshots
+            if-no-files-found: ignore # 'warn' or 'error' are also available, defaults to `warn`
+        - uses: actions/upload-artifact@v4
+          with:
+            name: cypress-videos
+            path: ./Cypress_Portfolio/cypress/videos
+            if-no-files-found: ignore # 'warn' or 'error' are also available, defaults to `warn`  
