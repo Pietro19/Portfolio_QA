@@ -17,7 +17,6 @@ Aqui você encontrará exemplos práticos de **testes automatizados de interface
 - Scripts de pré-execução e testes automatizados  
 - Variáveis e ambientes configuráveis  
 - Validação de respostas HTTP, JSON e regras de negócio  
-- Possibilidade de uso com Newman para CI/CD  
 
 ## 🎯 Objetivo do Repositório
 
