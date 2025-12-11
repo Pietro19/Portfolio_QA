@@ -154,14 +154,14 @@ describe('testes da pagina de login', () => {
     cy.get('[data-test="login-button"]').should('be.enabled') // comportamento real?
     })
 
-    it.only('Login usando tecla ENTER', () => {
+    it('Login usando tecla ENTER', () => {
     cy.visit("https://www.saucedemo.com")
     cy.get('[data-test="username"]').type('standard_user')
     cy.get('[data-test="password"]').type('secret_sauce{enter}')
     cy.get('[data-test="title"]').should('contain','Products')
     })
 
-    it('Teste de falha Login', () => {
+    it.only('Teste de falha Login', () => {
         cy.visit("https://www.saucedemo.com")
         cy.get('.login_credentials_wrap-inner').should('not.exist')
 
