@@ -138,7 +138,32 @@ describe('testes da pagina de login', () => {
         cy.get('.login_logo').should('be.visible')
     });
 
-    it('TESTE DO REPORT', () => {
-        
+    it('Limite de caracteres - username gigante', () => {
+    cy.visit("https://www.saucedemo.com")
+    const longText = 'a'.repeat(500)
+
+    cy.get('[data-test="username"]').type(longText)
+    cy.get('[data-test="password"]').type('secret_sauce')
+    cy.get('[data-test="login-button"]').click()
+
+    cy.get('[data-test="error"]').should('exist')
+    })
+
+    it('Botão desabilitado com campos vazios', () => {
+    cy.visit("https://www.saucedemo.com")
+    cy.get('[data-test="login-button"]').should('be.enabled') // comportamento real?
+    })
+
+    it.only('Login usando tecla ENTER', () => {
+    cy.visit("https://www.saucedemo.com")
+    cy.get('[data-test="username"]').type('standard_user')
+    cy.get('[data-test="password"]').type('secret_sauce{enter}')
+    cy.get('[data-test="title"]').should('contain','Products')
+    })
+
+    it('Teste de falha Login', () => {
+        cy.visit("https://www.saucedemo.com")
+        cy.get('.login_credentials_wrap-inner').should('not.exist')
+
     });
 });

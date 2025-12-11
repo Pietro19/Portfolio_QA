@@ -121,4 +121,66 @@ describe('Testes para pagina home', () => {
         cy.get('[data-test="inventory-item-name"]').contains('Sauce Labs Backpack')
     });
 
+    it('Valida abertura do menu lateral (hamburger menu)', () => {
+    cy.visit("https://www.saucedemo.com")
+    cy.get('[data-test="username"]').type('standard_user')
+    cy.get('[data-test="password"]').type('secret_sauce')
+    cy.get('[data-test="login-button"]').click()
+
+    cy.get('#react-burger-menu-btn').click() // clica no botao - sanduiche
+    cy.get('.bm-menu-wrap').should('have.css', 'display', 'block') // Verifica se ouve alteracao no tamanho da tela ou se algo esta block
+    })
+
+    it('Valida logout via menu lateral', () => {
+        cy.visit("https://www.saucedemo.com")
+        cy.get('[data-test="username"]').type('standard_user')
+        cy.get('[data-test="password"]').type('secret_sauce')
+        cy.get('[data-test="login-button"]').click()
+
+        cy.get('#react-burger-menu-btn').click()
+        cy.get('#logout_sidebar_link').click()
+
+        cy.url().should('include', 'saucedemo.com')
+        cy.get('[data-test="login-button"]').should('exist')
+    })
+
+
+    it('Valida ordenação Z-A', () => {
+    cy.visit("https://www.saucedemo.com")
+    cy.get('[data-test="username"]').type('standard_user')
+    cy.get('[data-test="password"]').type('secret_sauce')
+    cy.get('[data-test="login-button"]').click()
+
+    cy.get('[data-test="product-sort-container"]').select('za')
+
+    cy.get('[data-test="inventory-item-name"]').then(($items) => {
+        const nomes = [...$items].map(el => el.innerText)
+        const ordenado = [...nomes].sort().reverse()
+        expect(nomes).to.deep.equal(ordenado)
+    })
+
+    })
+
+    it('Valida contador do carrinho após adicionar produto', () => {
+        cy.visit("https://www.saucedemo.com")
+        cy.get('[data-test="username"]').type('standard_user')
+        cy.get('[data-test="password"]').type('secret_sauce')
+        cy.get('[data-test="login-button"]').click()
+
+        cy.get('[data-test="add-to-cart-sauce-labs-backpack"]').click()
+        cy.get('.shopping_cart_badge').should('contain', '1')
+        })
+
+
+     it('Valida decremento do carrinho ao remover item', () => {
+    cy.visit("https://www.saucedemo.com")
+    cy.get('[data-test="username"]').type('standard_user')
+    cy.get('[data-test="password"]').type('secret_sauce')
+    cy.get('[data-test="login-button"]').click()
+
+    cy.get('[data-test="add-to-cart-sauce-labs-backpack"]').click()
+    cy.get('[data-test="remove-sauce-labs-backpack"]').click()
+    cy.get('.shopping_cart_badge').should('not.exist')
+})
+
 });
