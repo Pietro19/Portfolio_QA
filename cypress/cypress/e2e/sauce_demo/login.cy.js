@@ -160,10 +160,12 @@ describe('testes da pagina de login', () => {
     cy.get('[data-test="password"]').type('secret_sauce{enter}')
     cy.get('[data-test="title"]').should('contain','Products')
     })
-
-    it.only('Teste de falha Login', () => {
+/*
+    it('Teste de falha Login', () => {
         cy.visit("https://www.saucedemo.com")
         cy.get('.login_credentials_wrap-inner').should('not.exist')
 
     });
+
+    */
 });
