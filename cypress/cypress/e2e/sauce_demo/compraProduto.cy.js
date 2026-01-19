@@ -20,5 +20,6 @@ describe('fluxo de compra', () => {
         cy.get('[data-test="complete-header"]').should('contain','Thank you for your order!')
         cy.get('[data-test="back-to-products"]').click()
         cy.get('[data-test="secondary-header"]').should('contain','Products')       
+        
     });
 });
