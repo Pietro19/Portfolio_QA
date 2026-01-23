@@ -94,12 +94,12 @@ describe('Testes na pagina HOME da SCODER', () => {
         cy.contains('Telefone:').should('be.visible')
         cy.contains('Email:').should('be.visible')
         cy.contains('Nome da empresa:').should('be.visible')
-        cy.contains('Quantidade funcionários:').should('be.visible')
-        cy.contains('Nicho empresa:').should('be.visible')
-        cy.contains('Produto que precisa: ').should('be.visible')
-        cy.get('.framer-wfVEy').should('be.visible')
+        cy.get('.framer-r50nxv > .framer-text').should('be.visible')
+        cy.get('.framer-1396vub > .framer-text').should('be.visible')
+        cy.get('[name="Produto que precisa"]').should('be.visible')
     })
-
+    ////////////////////////////////////////////////////////////
+    // Baterias de teses para o formulario
     it('Deve permitir preencher todos os campos e enviar o formulário', () => {
 
         cy.visit('https://www.scoder.com.br/#hero-section-boss')
@@ -107,7 +107,7 @@ describe('Testes na pagina HOME da SCODER', () => {
         cy.get('.framer-yz4uV').click()
 
         // Nome
-        cy.get('[name="Nome"]')
+        cy.get('[name="Name"]')
             .scrollIntoView()
             .should('exist')
             .should('be.visible')
@@ -131,7 +131,7 @@ describe('Testes na pagina HOME da SCODER', () => {
             .type('test@gmail.com', { force: true })
             .should('have.value', 'test@gmail.com')
 
-        cy.get('[name="nome da empresa"]')
+        cy.get('[name="Nome da empresa"]')
             .scrollIntoView()
             .should('exist')
             .should('be.visible')
@@ -139,7 +139,7 @@ describe('Testes na pagina HOME da SCODER', () => {
             .type('empresa test', { force: true })
             .should('have.value', 'empresa test')
 
-        cy.get('[name="Quantidade de funcionários:"]')
+        cy.get('[name="Quantidade de funcionários"]')
             .scrollIntoView()
             .should('exist')
             .should('be.visible')
@@ -147,7 +147,7 @@ describe('Testes na pagina HOME da SCODER', () => {
             .type('999', { force: true })
             .should('have.value', '999')
 
-        cy.get('[name="Nicho empresa"]')
+        cy.get('[name="Nicho da empresa"]')
             .scrollIntoView()
             .should('exist')
             .should('be.visible')
@@ -155,7 +155,7 @@ describe('Testes na pagina HOME da SCODER', () => {
             .type('test', { force: true })
             .should('have.value', 'test')
 
-        cy.get('[name="Produto que precisa: "]')
+        cy.get('[name="Produto que precisa"]')
             .scrollIntoView()
             .should('exist')
             .should('be.visible')
@@ -179,10 +179,63 @@ describe('Testes na pagina HOME da SCODER', () => {
             })
     })
 
+    it('Deve permitir digitar um nome válido', () => {
+        cy.visit('https://www.scoder.com.br/#hero-section-boss')
+        cy.get('.framer-yz4uV').click({ force: true })
+        cy.get('[name="Name"]')
+        .type('João Silva',{ force: true })
+        .should('have.value', 'João Silva')
+    })
+
+    it('Não deve permitir nome acima do limite', () => {
+
+        const nomeLongo = 'A'.repeat(100)
+        cy.visit('https://www.scoder.com.br/#hero-section-boss')
+        cy.get('.framer-yz4uV').click({ force: true })
+        cy.get('[name="Name"]')
+        .type(nomeLongo,{ force: true })
+        .invoke('val')
+        .should('have.length', 100)
+    })
+
+
+
+    ////////////////////////////////////////////////////////////
     it('Teste na verção ingles do site', () => {
         cy.visit('https://www.scoder.com.br/en/')
         cy.contains('Scoder Tech Studio').should('be.visible')
-        
+        cy.reload()
+        cy.contains('About us').should('be.visible')
+
+    })
+
+    it('Deve exibir a seção Sobre nós', () => {
+        cy.visit('https://www.scoder.com.br/#hero-section-boss')
+        cy.contains('Tech Studio').should('be.visible')
+    })
+
+    it('Não deve conter texto vazio na seção Sobre nós', () => {
+        cy.visit('https://www.scoder.com.br/#hero-section-boss')
+        cy.get('section')
+            .contains('Tech Studio').parent()
+            .should('not.be.empty')
+        })
+
+    it('Deve exibir o título da seção Serviços', () => {
+        cy.visit('https://www.scoder.com.br/#hero-section-boss')
+        cy.get('.framer-x6ky8u > p.framer-text > .framer-text').click()
+        cy.contains('Serviços').should('be.visible')
+    })
+
+    it('Deve exibir a seção Cases', () => {
+        cy.visit('https://www.scoder.com.br/#hero-section-boss')
+        cy.contains('Cases').should('be.visible')
+    })
+
+    it('Deve exibir ao menos um case', () => {
+        cy.visit('https://www.scoder.com.br/#hero-section-boss')
+        cy.get('.framer-1xmbzh5 > p.framer-text > .framer-text').click()
+        cy.get('.framer-a9ol9t > div > img').should('have.length.greaterThan', 0)
     })
 
 
