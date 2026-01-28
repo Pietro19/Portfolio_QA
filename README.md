@@ -1,7 +1,7 @@
 # 🧪 Portfólio de Qualidade | Testes Automatizados (Cypress + Postman)
 
 Bem-vindo ao meu portfólio de Qualidade e Engenharia de Software!  
-Aqui você encontrará exemplos práticos de **testes automatizados de interface (E2E) utilizando Cypress** e **testes de API desenvolvidos no Postman**, organizados como um repositório demonstrativo das minhas habilidades em QA/QE.
+Aqui você encontrará exemplos práticos de **testes automatizados de interface (E2E) utilizando Cypress** e **testes de API desenvolvidos no Postman**, organizados como um repositório demonstrativo das minhas habilidades em QA.
 
 ## 📌 Tecnologias Utilizadas
 
