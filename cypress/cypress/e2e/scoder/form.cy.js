@@ -2,10 +2,10 @@ import "cypress-real-events";
 
 describe('HOME - SCODER', () => {
 
-     beforeEach(() => {
+    beforeEach(() => {
         cy.visit('https://www.scoder.com.br/#hero-section-boss')
     })
-    
+
     it('Deve permitir preencher todos os campos e enviar o formulário', () => {
         cy.get('.framer-yz4uV').click()
         cy.get('[name="Name"]')
@@ -15,7 +15,7 @@ describe('HOME - SCODER', () => {
             .click({ force: true })
             .type('test', { force: true })
             .should('have.value', 'test')
-        
+
         cy.get('[name="Telefone"]')
             .scrollIntoView()
             .should('exist')
@@ -63,7 +63,19 @@ describe('HOME - SCODER', () => {
             .click({ force: true })
             .type('test', { force: true })
             .should('have.value', 'test')
-        })
+    })
+
+    it('Validar visualização Formulario - Agendar Call', () => {
+        cy.get('.framer-yz4uV').click()
+        cy.contains('Faça parte da nossa jornada de inovação').should('be.visible')
+        cy.contains('Nome:').should('be.visible')
+        cy.contains('Telefone:').should('be.visible')
+        cy.contains('Email:').should('be.visible')
+        cy.contains('Nome da empresa:').should('be.visible')
+        cy.get('.framer-r50nxv > .framer-text').should('be.visible')
+        cy.get('.framer-1396vub > .framer-text').should('be.visible')
+        cy.get('[name="Produto que precisa"]').should('be.visible')
+    })
 
     it('Bloqueia envio ao clicar em Enviar sem preencher campos', () => {
         cy.get('.framer-yz4uV').click()
@@ -73,28 +85,25 @@ describe('HOME - SCODER', () => {
 
         cy.get('input[placeholder="Nome"]')
             .then(($input) => {
-            expect($input[0].checkValidity()).to.be.false
+                expect($input[0].checkValidity()).to.be.false
             })
     })
 
     it('Deve permitir digitar um nome válido', () => {
         cy.get('.framer-yz4uV').click({ force: true })
         cy.get('[name="Name"]')
-        .type('João Silva',{ force: true })
-        .should('have.value', 'João Silva')
+            .type('João Silva', { force: true })
+            .should('have.value', 'João Silva')
     })
 
     it('Não deve permitir nome acima do limite', () => {
         const nomeLongo = 'A'.repeat(100)
-        
+
         cy.get('.framer-yz4uV').click({ force: true })
         cy.get('[name="Name"]')
-        .type(nomeLongo,{ force: true })
-        .invoke('val')
-        .should('have.length', 100)
+            .type(nomeLongo, { force: true })
+            .invoke('val')
+            .should('have.length', 100)
     })
-
-
-
 
 });
