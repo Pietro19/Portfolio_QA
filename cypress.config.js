@@ -5,3 +5,13 @@ module.exports = {
     },
   },
 };
+
+
+export default defineConfig({
+  video: false,
+  numTestsKeptInMemory: 0,
+
+  e2e: {
+    experimentalMemoryManagement: true
+  }
+})
