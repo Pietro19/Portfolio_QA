@@ -1,8 +1,10 @@
-<p align="center">
-  <img src="[![cypress_CI](https://github.com/Pietro19/Portfolio_QA/actions/workflows/CI_cypress.yml/badge.svg)](https://github.com/Pietro19/Portfolio_QA/actions/workflows/CI_cypress.yml)" />
-</p>
+<h1 align="center">🧪 Portfólio de Qualidade | Testes Automatizados</h1>
 
-# 🧪 Portfólio de Qualidade | Testes Automatizados
+<p align="center">
+  <a href="https://github.com/Pietro19/Portfolio_QA/actions/workflows/CI_cypress.yml">
+    <img src="https://github.com/Pietro19/Portfolio_QA/actions/workflows/CI_cypress.yml/badge.svg"/>
+  </a>
+</p>
 
 Bem-vindo ao meu portfólio de Qualidade e Engenharia de Software!  
 Aqui você encontrará exemplos práticos de **testes automatizados de interface (E2E) utilizando Cypress** e **testes de API desenvolvidos no Postman**, organizados como um repositório demonstrativo das minhas habilidades em QA.
