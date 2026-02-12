@@ -7,7 +7,7 @@ on:
     branches: [ main ]
 
 jobs:
-  playwright-tests:
+  test:
     runs-on: ubuntu-latest
 
     steps:
@@ -15,22 +15,23 @@ jobs:
 
       - uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: lts/*
 
       - name: Install dependencies
         working-directory: ./playwright
-        run: npm ci
+        run: npm install
 
-      - name: Install browsers
+      - name: Install Playwright Browsers
         working-directory: ./playwright
         run: npx playwright install --with-deps
 
-      - name: Run tests
+      - name: Run Playwright tests
         working-directory: ./playwright
         run: npx playwright test
 
       - uses: actions/upload-artifact@v4
-        if: always()
+        if: ${{ !cancelled() }}
         with:
           name: playwright-report
           path: playwright/playwright-report/
+          retention-days: 30
