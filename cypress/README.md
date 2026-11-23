@@ -233,5 +233,4 @@ Automação de testes end-to-end em aplicação de e-commerce, cobrindo autentic
 - JavaScript  
 - Node.js  
 - cypress-real-events  
-- Postman (testes de API em projetos complementares)
 

@@ -1,8 +1,8 @@
 <h1 align="center">🎭 Playwright Automation Tests</h1>
 
 <p align="center">
-  <a href="https://github.com/Pietro19/Playwright_testes/actions/workflows/playwright.yml">
-    <img src="https://github.com/Pietro19/Playwright_testes/actions/workflows/playwright.yml/badge.svg"/>
+  <a href="https://github.com/Pietro19/Portfolio_QA/actions/workflows/ci.yml">
+    <img src="https://github.com/Pietro19/Portfolio_QA/actions/workflows/ci.yml/badge.svg"/>
   </a>
 </p>
 
