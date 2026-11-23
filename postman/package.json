@@ -1,0 +1,16 @@
+{
+  "name": "qa-portfolio-postman",
+  "version": "1.0.0",
+  "description": "Testes de API da ServeRest com Postman + Newman",
+  "author": "Pietro Souza Cardoso",
+  "license": "ISC",
+  "private": true,
+  "scripts": {
+    "build": "node scripts/build-collection.js",
+    "test": "newman run collections/serverest.postman_collection.json -e environments/serverest.postman_environment.json -r cli,htmlextra,junit --reporter-htmlextra-export reports/newman-report.html --reporter-htmlextra-title \"Relatório de Testes de API – ServeRest\" --reporter-junit-export reports/junit.xml"
+  },
+  "devDependencies": {
+    "newman": "^6.2.3",
+    "newman-reporter-htmlextra": "^1.23.1"
+  }
+}
