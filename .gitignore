@@ -1,37 +1,30 @@
-# Dependency directories
+# Dependências
 node_modules/
-videos/
-reports/
-target/
-screenshots/
-build/
-
-# Optional npm cache directory
 .npm
 
-# dotenv environment variables file
+# Artefatos do Cypress
+cypress/cypress/videos/
+cypress/cypress/screenshots/
+cypress/cypress/downloads/
+cypress/cypress/reports/
+
+# Artefatos do Playwright
+playwright/test-results/
+playwright/playwright-report/
+playwright/blob-report/
+playwright/playwright/.cache/
+playwright/playwright/.auth/
+
+# Ambiente / logs / temporários
 .env
-
-# Compiled class file
-*.class
-
-# Log files
 *.log
+*.tmp
 
-# IDEs
+# IDEs / SO
 .idea/
 *.iml
 *.swp
 *.swo
-.vscode
-
-# Outros arquivos temporários
-*.tmp
-
-# Outros arquivos
-package-lock.json
-
-1-getting-started
-2-advanced-examples
-
-*.xlsx
+.vscode/
+.DS_Store
+Thumbs.db

@@ -1,13 +1,16 @@
 {
-  "name": "qa_testes",
+  "name": "qa-portfolio-cypress",
   "version": "1.0.0",
-  "description": "",
+  "description": "Testes E2E com Cypress – Scoder, Inatel e SauceDemo",
   "license": "ISC",
-  "author": "",
-  "type": "commonjs",
-  "main": "index.js",
+  "author": "Pietro Souza Cardoso",
+  "private": true,
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "cypress run --browser chrome --headless",
+    "test:open": "cypress open",
+    "test:scoder": "cypress run --spec 'cypress/e2e/scoder/**'",
+    "test:inatel": "cypress run --spec 'cypress/e2e/inatel_page/**'",
+    "test:saucedemo": "cypress run --spec 'cypress/e2e/sauce_demo/**'"
   },
   "devDependencies": {
     "cypress": "^15.2.0",
