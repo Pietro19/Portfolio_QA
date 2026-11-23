@@ -1,17 +1,19 @@
 {
-  "name": "test",
+  "name": "qa-portfolio-playwright",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "Testes E2E com Playwright + TypeScript – Inatel e SauceDemo",
   "scripts": {
-    "test": "npx playwright test"
+    "test": "playwright test",
+    "test:headed": "playwright test --headed",
+    "test:ui": "playwright test --ui",
+    "report": "playwright show-report"
   },
-  "keywords": [],
-  "author": "",
+  "author": "Pietro Souza Cardoso",
   "license": "ISC",
   "type": "commonjs",
   "devDependencies": {
     "@playwright/test": "^1.58.0",
     "@types/node": "^25.1.0"
-  }
+  },
+  "private": true
 }
