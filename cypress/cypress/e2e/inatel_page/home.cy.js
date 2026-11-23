@@ -1,89 +1,70 @@
 import "cypress-real-events";
 
-describe('Testes na pagina HOME do Inatel', () => {
-    
-    it('Pagina HOME Inatel existe', () => {
-        
-        cy.visit("https://inatel.br/home/")
-        cy.get('.ma-logo').should('exist')
-        cy.get('#contactar').should('contain','Conheça o Inatel')
-        cy.get('#noticias-inatel').should('contain','Notícias')
-        
-    });
+// Ignora erros de scripts de terceiros (analytics, chat etc.) do site
+Cypress.on("uncaught:exception", () => false);
 
-    it('Validar texto do botão "Conheça o inatel"', () => {
-        cy.visit("https://inatel.br/home/")
-        cy.get('#contactar').should('contain','Conheça o Inatel')
-    });
+const HOME = "https://inatel.br/home/";
 
-    it('Validar se o botão "Conheça o inatel" funciona', () => {
-        cy.visit("https://inatel.br/home/")
-        cy.get('#contactar').click()
-        cy.get('.flexBoxGeral > :nth-child(1) > .subtopic > .colorfff').should('contain','Quem Somos')
-    });
+describe("Testes na pagina HOME do Inatel", () => {
+  beforeEach(() => {
+    cy.viewport(1920, 1080);
+    cy.visit(HOME);
+    // Aceita apenas cookies essenciais. O site recarrega a página ~500ms depois
+    // de salvar a preferência; o marcador na window garante que a recarga terminou.
+    cy.window().then((win) => { win.antesDoReload = true; });
+    cy.get(".deniedCookie").click();
+    cy.window().should("not.have.property", "antesDoReload");
+  });
 
-    it('Validar texto do botão "Notícias"', () => {
-        cy.visit("https://inatel.br/home/")
-        cy.get('#noticias-inatel').should('contain','Notícias')
-    });
+  it("Pagina HOME Inatel existe", () => {
+    cy.title().should("contain", "Inatel");
+    cy.get('a[href="/"]').should("be.visible");
+    cy.get("h1").should("contain", "Talento gera Tecnologia");
+  });
 
-    it('Validar se botão "Notícias" Funciona', () => {
-        cy.visit("https://inatel.br/home/")
-        cy.get('#noticias-inatel').click()
-        cy.get('.news-headline > h2').should('contain','Destaque')
+  it('Validar texto do botão "Vestibular 2027"', () => {
+    cy.get(".hero__actions a").should("be.visible").and("contain", "Vestibular");
+  });
 
-    });
+  it('Validar se o botão "Vestibular 2027" funciona', () => {
+    cy.get(".hero__actions a").click({ scrollBehavior: "center" });
+    cy.url().should("include", "/vestibular");
+  });
 
-    it('Valida redirecionamento ao clicar no botão Graduação', () => {
-    cy.visit('https://inatel.br/home/')
+  it('Validar texto do botão "Mais notícias"', () => {
+    cy.get('a.dx-btn[href$="/noticias"]').should("contain", "Mais notícias");
+  });
 
-    cy.get(':nth-child(1) > .boxLink')
-      .invoke('removeAttr', 'target') //.invoke Cypress, pegue esse elemento e EXECUTE um método nele.
-      .click()
+  it('Validar se botão "Mais notícias" funciona', () => {
+    cy.get('a.dx-btn[href$="/noticias"]').click({ scrollBehavior: "center" });
+    cy.url().should("include", "/noticias");
+  });
 
-    cy.url().should('include', '/vestibular')
-})
+  it("Valida redirecionamento ao clicar no card Graduação", () => {
+    cy.get('a.dx-card[href$="/vestibular"]').should("contain", "Graduação").click({ scrollBehavior: "center" });
+    cy.url().should("include", "/vestibular");
+  });
 
-     it('Valida redirecionamento ao clicar no botão Especialização', () => {
-    cy.visit("https://inatel.br/home/")
+  it("Valida redirecionamento ao clicar no card Pós-Graduação", () => {
+    cy.get('a.dx-card[href$="/pos"]').should("contain", "Pós-Graduação").click({ scrollBehavior: "center" });
+    cy.url().should("include", "/pos");
+  });
 
-    cy.get(':nth-child(2) > .boxLink')
-     .invoke('removeAttr', 'target')
-     .click()
+  it("Valida redirecionamento ao clicar no card Mestrado e Doutorado (Stricto Sensu)", () => {
+    cy.get('a.dx-card[href$="/mestrado-doutorado"]').should("contain", "Stricto Sensu").click({ scrollBehavior: "center" });
+    cy.url().should("include", "/mestrado-doutorado");
+  });
 
-    cy.url().should('include', '/pos')
-});
+  it("Valida redirecionamento ao clicar no card Capacitações", () => {
+    cy.get('a.dx-card[href$="/treinamento"]').should("contain", "Capacitações").click({ scrollBehavior: "center" });
+    cy.url().should("include", "/treinamento");
+  });
 
-    Cypress.on('uncaught:exception', () => { 
-    return false
-  })
-
-  it('Valida redirecionamento ao clicar no botão Mestrado e Doutorado', () => {
-    cy.visit('https://inatel.br/home/')
-
-    cy.get(':nth-child(3) > .boxLink')
-      .invoke('removeAttr', 'target')
-      .click()
-
-    cy.url().should('include', '/mestrado-doutorado')
-  })
-
-     it('Valida redirecionamento ao clicar no botão "Cursos de Extensão e Certificações" ', () => {
-        cy.visit("https://inatel.br/home/")
-        cy.get(':nth-child(5) > .boxLink')
-        .invoke('removeAttr', 'target')
-        .click()
-
-        cy.url().should('include', '/treinamento')
-    });
-
-     it('Valida redirecionamento ao clicar no botão "Inatel Online"', () => {
-        cy.visit("https://inatel.br/home/")
-        cy.get(':nth-child(4) > .boxLink')
-        .invoke('removeAttr', 'target')
-        .click()
-
-        cy.url().should('include', '//online.inatel.br')
-    });
-
+  it('Valida link "Inatel Online" no rodapé', () => {
+    cy.get('.dx-footer a[href^="https://online.inatel.br"]')
+      .first()
+      .should("contain", "Inatel Online")
+      .and("have.attr", "href")
+      .and("include", "online.inatel.br");
+  });
 });

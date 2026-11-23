@@ -366,8 +366,8 @@ describe('HOME - SCODER', () => {
 
         it('Deve exibir informações de contato - Footer ', () => {
             cy.scrollTo('bottom')
-            cy.contains('suricato@scoder.com.br').should('be.visible')
-            cy.get('.framer-1lb9wo5 > p.framer-text > .framer-text').should('be.visible')
+            cy.contains('contato@scoder.com.br').should('be.visible')
+            cy.contains('+55 35 9 9939-3794').should('be.visible')
         })
 
         it('Deve exibir ícones de redes sociais - Footer', () => {
