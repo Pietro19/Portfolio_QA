@@ -67,6 +67,9 @@ jobs:
   playwright:
     name: Playwright (Chromium)
     runs-on: ubuntu-24.04  # versão fixa: reprodutível e suportada pelo Playwright
+    # Imagem oficial com navegadores e dependências já instalados (versão = @playwright/test do lockfile)
+    container:
+      image: mcr.microsoft.com/playwright:v1.58.0-noble
     timeout-minutes: 30
     defaults:
       run:
@@ -82,9 +85,6 @@ jobs:
 
       - name: Instalar dependências
         run: npm ci
-
-      - name: Instalar navegadores do Playwright
-        run: npx playwright install --with-deps chromium
 
       - name: Executar testes Playwright
         run: npm test

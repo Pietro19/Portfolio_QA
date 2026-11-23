@@ -7,7 +7,7 @@
 
 <p align="center">
   <a href="https://github.com/Pietro19/Portfolio_QA/actions/workflows/ci.yml"><img src="https://github.com/Pietro19/Portfolio_QA/actions/workflows/ci.yml/badge.svg" alt="CI"></a>
-  <img src="https://img.shields.io/badge/testes-135-success" alt="135 testes">
+  <img src="https://img.shields.io/badge/testes-134-success" alt="134 testes">
   <img src="https://img.shields.io/badge/Cypress-15-17202C?logo=cypress&logoColor=white" alt="Cypress">
   <img src="https://img.shields.io/badge/Playwright-1.58-2EAD33?logo=playwright&logoColor=white" alt="Playwright">
   <img src="https://img.shields.io/badge/TypeScript-3178C6?logo=typescript&logoColor=white" alt="TypeScript">
@@ -21,7 +21,7 @@
 
 | | |
 |---|---|
-| **Testes automatizados** | **135** (105 Cypress + 30 Playwright) |
+| **Testes automatizados** | **134** (104 Cypress + 30 Playwright) |
 | **Aplicações reais testadas** | 3: Scoder (institucional), Inatel (educacional), SauceDemo (e-commerce) |
 | **Frameworks** | Cypress (JavaScript) e Playwright (TypeScript) |
 | **CI/CD** | GitHub Actions: 2 jobs em paralelo, execução em todo push/PR + execução diária agendada |
@@ -38,7 +38,8 @@
 - **Duas ferramentas de mercado**: a mesma suíte do Inatel foi implementada em **Cypress e em Playwright**, permitindo comparar as abordagens lado a lado
 - **Documentação de defeito no código**: uso de `test.fail()` no Playwright para registrar um comportamento divergente conhecido sem quebrar o pipeline
 - **CI/CD de testes**: pipeline com cache de dependências, `npm ci` reprodutível, retries apenas em CI, cancelamento de execuções obsoletas e publicação de artefatos
-- **Organização**: testes separados por aplicação e por funcionalidade, seletores estáveis (`data-test`) e scripts `npm` padronizados
+- **Organização**: testes separados por aplicação e por funcionalidade, seletores estáveis (`data-test`, `href`, texto) e scripts `npm` padronizados
+- **Testes resilientes a efeitos colaterais do site**: tratamento do banner de cookies (que recarrega a página) antes das interações, evitando testes instáveis
 
 ---
 
@@ -47,9 +48,9 @@
 | Aplicação | Tipo | Cypress | Playwright | O que é validado |
 |---|---|:---:|:---:|---|
 | [Scoder](https://www.scoder.com.br) | Site institucional | 54 | – | Navegação por menu/scroll, 5 seções de conteúdo, formulário "Agendar Call" (obrigatórios, limite de caracteres), versão em inglês, rodapé completo |
-| [SauceDemo](https://www.saucedemo.com) | E-commerce | 41 | 20 | Login (válido, inválido, bloqueado, campos vazios, bordas), produtos, carrinho, ordenação, menu lateral, logout, **fluxo E2E de compra**, segurança, sessão e performance |
-| [Inatel](https://inatel.br) | Site educacional | 10 | 10 | Carregamento da home, textos e funcionamento de botões, redirecionamento para Graduação, Especialização, Mestrado/Doutorado, Extensão e Inatel Online |
-| **Total** | | **105** | **30** | **135 testes** |
+| [SauceDemo](https://www.saucedemo.com) | E-commerce | 40 | 20 | Login (válido, inválido, bloqueado, campos vazios, bordas), produtos, carrinho, ordenação, menu lateral, logout, **fluxo E2E de compra**, segurança, sessão e performance |
+| [Inatel](https://inatel.br) | Site educacional | 10 | 10 | Carregamento da home, botões "Vestibular 2027" e "Mais notícias", redirecionamento dos cards Graduação, Pós-Graduação, Mestrado/Doutorado e Capacitações, link do Inatel Online |
+| **Total** | | **104** | **30** | **134 testes** |
 
 <details>
 <summary><b>🔍 Detalhes: Playwright × SauceDemo (20 testes)</b></summary>
@@ -67,9 +68,9 @@
 </details>
 
 <details>
-<summary><b>🔍 Detalhes: Cypress × SauceDemo (41 testes)</b></summary>
+<summary><b>🔍 Detalhes: Cypress × SauceDemo (40 testes)</b></summary>
 
-- **Login (22):** válido/inválido/bloqueado, campos vazios, emoji, input numérico, senha mascarada, limite de caracteres, tecla Enter, foco, responsividade
+- **Login (21):** válido/inválido/bloqueado, campos vazios, emoji, input numérico, senha mascarada, limite de caracteres, tecla Enter, foco, responsividade
 - **Home/Produtos (18):** listagem, preço, imagem, descrição, Add/Remove, contador do carrinho, ordenação Z-A, menu hambúrguer, logout, scroll
 - **E2E (1):** fluxo completo do login até a finalização da compra
 
@@ -99,6 +100,8 @@ flowchart LR
 - Arquivo: [`.github/workflows/ci.yml`](.github/workflows/ci.yml)
 - Os relatórios ficam disponíveis em **Actions → execução → Artifacts**
 - Anotações de falha do Playwright aparecem direto no resumo da execução e no PR
+- O job do Playwright roda no **container oficial** `mcr.microsoft.com/playwright`, com navegadores pré-instalados (sem download a cada execução)
+- Runners com versão fixa (`ubuntu-24.04`) para builds reprodutíveis
 
 ---
 
@@ -112,7 +115,7 @@ Portfolio_QA/
 │   └── cypress/
 │       ├── e2e/
 │       │   ├── inatel_page/        # 10 testes
-│       │   ├── sauce_demo/         # 41 testes
+│       │   ├── sauce_demo/         # 40 testes
 │       │   └── scoder/             # 54 testes
 │       └── support/
 └── playwright/                     # Projeto Playwright (TypeScript)
