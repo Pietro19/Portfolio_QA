@@ -2,7 +2,7 @@
 
 <p align="center">
   <b>Testes E2E com Cypress e Playwright, rodando em CI/CD no GitHub Actions</b><br>
-  <sub>Pietro Souza Cardoso · Quality Assurance</sub>
+  <sub>Pietro Souza Cardoso · Quality Assurance · <a href="https://www.linkedin.com/in/pietro-de-souza-cardoso-1b2333224/">LinkedIn</a></sub>
 </p>
 
 <p align="center">
@@ -153,4 +153,5 @@ npm run report      # abre o último relatório HTML
 
 ## 📬 Contato
 
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-Pietro_de_Souza_Cardoso-0A66C2?logo=linkedin&logoColor=white)](https://www.linkedin.com/in/pietro-de-souza-cardoso-1b2333224/)
 [![GitHub](https://img.shields.io/badge/GitHub-Pietro19-181717?logo=github)](https://github.com/Pietro19)
