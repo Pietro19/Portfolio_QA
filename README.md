@@ -1,15 +1,17 @@
 <h1 align="center">🧪 Portfólio de QA Automation</h1>
 
 <p align="center">
-  <b>Testes E2E com Cypress e Playwright, rodando em CI/CD no GitHub Actions</b><br>
+  <b>Testes E2E (Cypress + Playwright) e de API (Postman + Newman), rodando em CI/CD no GitHub Actions</b><br>
   <sub>Pietro Souza Cardoso · Quality Assurance · <a href="https://www.linkedin.com/in/pietro-de-souza-cardoso-1b2333224/">LinkedIn</a></sub>
 </p>
 
 <p align="center">
   <a href="https://github.com/Pietro19/Portfolio_QA/actions/workflows/ci.yml"><img src="https://github.com/Pietro19/Portfolio_QA/actions/workflows/ci.yml/badge.svg" alt="CI"></a>
-  <img src="https://img.shields.io/badge/testes-134-success" alt="134 testes">
+  <img src="https://img.shields.io/badge/testes_E2E-134-success" alt="134 testes E2E">
+  <img src="https://img.shields.io/badge/asserções_de_API-64-success" alt="64 asserções de API">
   <img src="https://img.shields.io/badge/Cypress-15-17202C?logo=cypress&logoColor=white" alt="Cypress">
   <img src="https://img.shields.io/badge/Playwright-1.58-2EAD33?logo=playwright&logoColor=white" alt="Playwright">
+  <img src="https://img.shields.io/badge/Postman-Newman-FF6C37?logo=postman&logoColor=white" alt="Postman">
   <img src="https://img.shields.io/badge/TypeScript-3178C6?logo=typescript&logoColor=white" alt="TypeScript">
   <img src="https://img.shields.io/badge/JavaScript-F7DF1E?logo=javascript&logoColor=black" alt="JavaScript">
   <img src="https://img.shields.io/badge/GitHub_Actions-2088FF?logo=githubactions&logoColor=white" alt="GitHub Actions">
@@ -21,13 +23,14 @@
 
 | | |
 |---|---|
-| **Testes automatizados** | **134** (104 Cypress + 30 Playwright) |
-| **Aplicações reais testadas** | 3: Scoder (institucional), Inatel (educacional), SauceDemo (e-commerce) |
-| **Frameworks** | Cypress (JavaScript) e Playwright (TypeScript) |
-| **CI/CD** | GitHub Actions: 2 jobs em paralelo, execução em todo push/PR + execução diária agendada |
-| **Evidências geradas** | Relatório HTML (Mochawesome / Playwright), vídeos, screenshots e traces de falha |
+| **Testes E2E (UI)** | **134** (104 Cypress + 30 Playwright) |
+| **Testes de API** | **27 requisições / 64 asserções** (Postman + Newman) na API REST ServeRest |
+| **Aplicações testadas** | 3 sites reais (Scoder, Inatel, SauceDemo) + 1 API REST (ServeRest) |
+| **Ferramentas** | Cypress (JavaScript), Playwright (TypeScript) e Postman/Newman |
+| **CI/CD** | GitHub Actions: 3 jobs em paralelo, execução em todo push/PR + execução diária agendada |
+| **Evidências geradas** | Relatórios HTML (Mochawesome, Playwright, Newman htmlextra), JUnit, vídeos, screenshots e traces |
 
-> Todos os testes rodam contra **sites reais em produção**, não contra exemplos prontos. A execução diária agendada funciona como um monitor de regressão: se algo mudar nos sites, o pipeline acusa.
+> Todos os testes rodam contra **sites e API reais**, não contra exemplos prontos. A execução diária agendada funciona como um monitor de regressão: se algo mudar nos sites, o pipeline acusa.
 
 ---
 
@@ -36,6 +39,7 @@
 - **Desenho de cenários de teste**: positivos, negativos, de borda (emoji, input numérico, string gigante), de UI, de navegação e de conteúdo
 - **Testes não funcionais básicos**: usabilidade (Tab/Enter/foco), segurança (acesso sem login, sessão após logout), sessão/refresh, performance (tempo de login) e responsividade (viewport)
 - **Duas ferramentas de mercado**: a mesma suíte do Inatel foi implementada em **Cypress e em Playwright**, permitindo comparar as abordagens lado a lado
+- **Testes de API independentes de dados**: a coleção cria o próprio usuário, faz login, cria produto e carrinho, encadeia IDs/token entre requisições e **limpa só o que criou** — essencial numa API pública e compartilhada
 - **Documentação de defeito no código**: uso de `test.fail()` no Playwright para registrar um comportamento divergente conhecido sem quebrar o pipeline
 - **CI/CD de testes**: pipeline com cache de dependências, `npm ci` reprodutível, retries apenas em CI, cancelamento de execuções obsoletas e publicação de artefatos
 - **Organização**: testes separados por aplicação e por funcionalidade, seletores estáveis (`data-test`, `href`, texto) e scripts `npm` padronizados
@@ -51,6 +55,17 @@
 | [SauceDemo](https://www.saucedemo.com) | E-commerce | 40 | 20 | Login (válido, inválido, bloqueado, campos vazios, bordas), produtos, carrinho, ordenação, menu lateral, logout, **fluxo E2E de compra**, segurança, sessão e performance |
 | [Inatel](https://inatel.br) | Site educacional | 10 | 10 | Carregamento da home, botões "Vestibular 2027" e "Mais notícias", redirecionamento dos cards Graduação, Pós-Graduação, Mestrado/Doutorado e Capacitações, link do Inatel Online |
 | **Total** | | **104** | **30** | **134 testes** |
+
+### 🔌 Testes de API – Postman + Newman
+
+| Recurso | Requisições | O que é validado |
+|---|:---:|---|
+| Usuários | 9 | Cadastro, e-mail duplicado, listagem, filtro por `_id`, busca por ID (sucesso e inexistente), edição, conflito de e-mail, exclusão |
+| Login | 3 | Login válido (token Bearer + tempo de resposta), credenciais inválidas (401), e-mail com formato inválido (400) |
+| Produtos | 7 | Cadastro com token de admin, **sem token (401)**, nome duplicado, listagem, filtro, busca por ID, edição |
+| Carrinhos | 6 | Cadastro, regra de 1 carrinho por usuário, consulta, cálculo do preço total, cancelar compra (estoque reabastecido) e concluir compra |
+| Limpeza | 2 | Exclusão do produto e do usuário criados na execução |
+| **Total** | **27** | **64 asserções** (status code, mensagens, contrato da resposta, regras de negócio) |
 
 <details>
 <summary><b>🔍 Detalhes: Playwright × SauceDemo (20 testes)</b></summary>
@@ -93,14 +108,17 @@ flowchart LR
     A[push / PR / agendamento diário / manual] --> B{GitHub Actions}
     B --> C[Job Cypress<br/>Chrome headless]
     B --> D[Job Playwright<br/>Chromium]
+    B --> G[Job Postman<br/>Newman]
     C --> E[Relatório Mochawesome<br/>+ vídeos + screenshots]
     D --> F[Relatório HTML<br/>+ vídeos + traces]
+    G --> H[Relatório htmlextra<br/>+ resumo JUnit no PR]
 ```
 
 - Arquivo: [`.github/workflows/ci.yml`](.github/workflows/ci.yml)
 - Os relatórios ficam disponíveis em **Actions → execução → Artifacts**
 - Anotações de falha do Playwright aparecem direto no resumo da execução e no PR
 - O job do Playwright roda no **container oficial** `mcr.microsoft.com/playwright`, com navegadores pré-instalados (sem download a cada execução)
+- O job de API publica o resultado do Newman como **check no PR** (relatório JUnit) e um relatório HTML detalhado
 - Runners com versão fixa (`ubuntu-24.04`) para builds reprodutíveis
 
 ---
@@ -109,7 +127,7 @@ flowchart LR
 
 ```
 Portfolio_QA/
-├── .github/workflows/ci.yml        # Pipeline unificado (Cypress + Playwright)
+├── .github/workflows/ci.yml        # Pipeline unificado (Cypress + Playwright + Postman)
 ├── cypress/                        # Projeto Cypress (JavaScript)
 │   ├── cypress.config.js           # Reporter Mochawesome, vídeo, retries
 │   └── cypress/
@@ -118,11 +136,15 @@ Portfolio_QA/
 │       │   ├── sauce_demo/         # 40 testes
 │       │   └── scoder/             # 54 testes
 │       └── support/
-└── playwright/                     # Projeto Playwright (TypeScript)
-    ├── playwright.config.ts        # Reporters, vídeo, trace, retries em CI
-    └── tests/
-        ├── inatel/                 # 10 testes
-        └── saucedemo/              # 20 testes
+├── playwright/                     # Projeto Playwright (TypeScript)
+│   ├── playwright.config.ts        # Reporters, vídeo, trace, retries em CI
+│   └── tests/
+│       ├── inatel/                 # 10 testes
+│       └── saucedemo/              # 20 testes
+└── postman/                        # Testes de API (Postman + Newman)
+    ├── collections/                # Coleção ServeRest (importável no Postman)
+    ├── environments/               # Environment com a baseURL
+    └── scripts/build-collection.js # Fonte legível dos scripts de teste da coleção
 ```
 
 ---
@@ -148,6 +170,14 @@ npm test            # execução completa
 npm run test:ui     # modo UI interativo
 npm run report      # abre o último relatório HTML
 ```
+
+**Postman / Newman**
+```bash
+cd postman
+npm ci
+npm test            # roda a coleção e gera reports/newman-report.html
+```
+Ou importe `postman/collections/serverest.postman_collection.json` e o environment no app do Postman.
 
 ---
 

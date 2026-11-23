@@ -1,4 +1,4 @@
-name: CI – Testes E2E
+name: CI – Testes Automatizados (E2E + API)
 
 on:
   push:
@@ -7,7 +7,7 @@ on:
     branches: [main]
   workflow_dispatch:
   schedule:
-    # Execução diária (06:00 BRT) para detectar regressões nos sites testados
+    # Execução diária (06:00 BRT) para detectar regressões nos sites e na API testados
     - cron: "0 9 * * *"
 
 concurrency:
@@ -106,3 +106,46 @@ jobs:
           path: playwright/test-results
           if-no-files-found: ignore
           retention-days: 7
+
+  postman:
+    name: Postman / Newman (API)
+    runs-on: ubuntu-24.04  # versão fixa: reprodutível
+    permissions:
+      contents: read
+      checks: write  # publica o resumo JUnit como check no PR
+    timeout-minutes: 15
+    defaults:
+      run:
+        working-directory: postman
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: lts/*
+          cache: npm
+          cache-dependency-path: postman/package-lock.json
+
+      - name: Instalar dependências
+        run: npm ci
+
+      - name: Executar testes de API (ServeRest)
+        run: npm test
+
+      - name: Publicar relatório HTML (htmlextra)
+        if: ${{ !cancelled() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: postman-report
+          path: postman/reports
+          if-no-files-found: ignore
+          retention-days: 30
+
+      - name: Resumo dos testes de API
+        if: ${{ !cancelled() }}
+        uses: mikepenz/action-junit-report@v5
+        with:
+          report_paths: postman/reports/junit.xml
+          check_name: Relatório Newman (API)
+          detailed_summary: true
+          include_passed: true
